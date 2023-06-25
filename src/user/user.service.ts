@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { SignupDto } from 'src/dto/signup.dto';
-import { Auth } from 'src/entities/Auth.entity';
+import { Users } from 'src/entities/Users.entity';
 
 @Injectable()
 export class UserService {
-  private auth: Auth[] = [];
+  private auth: Users[] = [];
 
   async login(authData: SignupDto) {}
 }
