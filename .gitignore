@@ -36,3 +36,6 @@ lerna-debug.log*
 
 .env
 package-lock.json
+ormconfig.json
+dist
+prettier.md

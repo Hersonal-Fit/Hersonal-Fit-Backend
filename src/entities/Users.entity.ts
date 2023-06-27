@@ -32,20 +32,16 @@ export class Users {
   updatedAt: Date;
 
   //관계설정
-  @OneToMany(() => Rates, (rates) => rates.fitnessachieve, {
+  @OneToMany(() => Rates, (rates) => rates.users, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   rates: Rates[];
 
-  @OneToMany(
-    () => FitnessCodes,
-    (fitnesscodes) => fitnesscodes.fitnessachieve,
-    {
-      cascade: true,
-      onDelete: 'CASCADE',
-    },
-  )
+  @OneToMany(() => FitnessCodes, (fitnesscodes) => fitnesscodes.users, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   fitnesscodes: FitnessCodes[];
 
   @OneToMany(() => Comments, (comments) => comments.users, {

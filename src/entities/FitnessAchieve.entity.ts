@@ -53,9 +53,6 @@ export class FitnessAchieve {
   )
   fitnesscodes: FitnessCodes[];
 
-  @OneToOne(() => Communities, (communities) => communities.fitnessachieve, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(() => Communities, (communities) => communities.fitnessachieve, {})
   communities: Communities[];
 }
