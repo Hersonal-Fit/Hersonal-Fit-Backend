@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
+  OneToOne,
 } from 'typeorm';
 import { UUID } from 'crypto';
 import { HealthTags } from './HealthTags.entity';
@@ -40,7 +41,6 @@ export class Communities {
 
   //관계설정
   @OneToMany(() => Users, (users) => users.communities, {
-    cascade: true,
     onDelete: 'CASCADE',
   })
   users: Users[];
@@ -70,12 +70,9 @@ export class Communities {
   })
   comments: Comments[];
 
-  @ManyToOne(
+  @OneToOne(
     () => FitnessAchieve,
     (fitnessachieve) => fitnessachieve.communities,
-    {
-      onDelete: 'CASCADE',
-    },
   )
   fitnessachieve: FitnessAchieve[];
 

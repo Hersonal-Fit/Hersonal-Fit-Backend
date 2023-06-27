@@ -4,7 +4,6 @@ import { MyPageModule } from './my-page/my-page.module';
 import { QuestionModule } from './question/question.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from 'dotenv';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Users } from './entities/Users.entity';
 import { Comments } from './entities/Comments.entity';
@@ -16,7 +15,6 @@ import { HealthTags } from './entities/HealthTags.entity';
 import { Likes } from './entities/Likes.entity';
 import { Rates } from './entities/Rates.entity';
 import { Reports } from './entities/Reports.entity';
-config();
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -25,10 +23,10 @@ config();
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get<string>('MYSQL_HOST'),
-        port: 3306,
+        port: configService.get<number>('MYSQL_PORT'),
         username: configService.get<string>('MYSQL_USERNAME'),
         password: configService.get<string>('MYSQL_PASSWORD'),
-        database: configService.get<string>('MSYQL_DATABASE'),
+        database: configService.get<string>('MYSQL_DATABASE'),
         entities: [
           Users,
           Comments,
