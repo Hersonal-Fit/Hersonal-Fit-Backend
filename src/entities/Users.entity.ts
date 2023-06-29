@@ -1,5 +1,5 @@
 import { Reports } from './Reports.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Rates } from './Rates.entity';
 import { FitnessCodes } from './FitnessCodes.entity';
 import { Comments } from './Comments.entity';
@@ -7,7 +7,7 @@ import { Communities } from './Communities.entity';
 
 @Entity({ name: 'Users' })
 export class Users {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'varchar' })
   email: string;
 
   @Column({ type: 'varchar', nullable: false })

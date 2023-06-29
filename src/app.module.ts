@@ -39,7 +39,8 @@ import { Reports } from './entities/Reports.entity';
           Rates,
           Reports,
         ],
-        synchronize: false,
+        //true로 설정시 자동으로 엔티티와 데이터베이스 스키마를 동기화한다.
+        synchronize: true,
       }),
     }),
     MainModule,
