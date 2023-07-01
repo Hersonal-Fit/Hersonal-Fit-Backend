@@ -10,12 +10,14 @@ import { SignupDto } from 'src/dto/signup.dto';
 import { Users } from 'src/entities/Users.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(Users)
     private readonly userRepository: Repository<Users>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async signup(signupData: SignupDto) {
@@ -34,6 +36,12 @@ export class UserService {
         nickname: nickname,
         password: hashedPassword,
       });
+      const userToken = await this.jwtService.signAsync(
+        {
+          email: email,
+        },
+        { expiresIn: '1h', secret: process.env.JWT_SECRET },
+      );
       await this.userRepository.save(madeUser);
       return '회원가입에 성공하였습니다.';
     } catch (error) {
