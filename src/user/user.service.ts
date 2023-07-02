@@ -36,12 +36,6 @@ export class UserService {
         nickname: nickname,
         password: hashedPassword,
       });
-      const userToken = await this.jwtService.signAsync(
-        {
-          email: email,
-        },
-        { expiresIn: '1h', secret: process.env.JWT_SECRET },
-      );
       await this.userRepository.save(madeUser);
       return '회원가입에 성공하였습니다.';
     } catch (error) {
@@ -71,5 +65,22 @@ export class UserService {
       console.log(error.message);
       throw new BadRequestException(error.message);
     }
+  }
+
+  async createToken(authData: LoginDto): Promise<string> {
+    const payload = { email: authData.email };
+    const expiresIn = 3600;
+    const allowdToken = this.jwtService.sign(payload, { expiresIn });
+    return allowdToken;
+  }
+
+  async verifyToken(token: string): Promise<string> {
+    if (token) {
+      const [bearer, proveToken] = token.split(' ');
+      if (bearer === 'Bearer' && proveToken) {
+        return token;
+      }
+    }
+    return '토큰인증에 실패하였습니다.';
   }
 }

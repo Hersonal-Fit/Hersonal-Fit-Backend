@@ -15,6 +15,7 @@ export class UserController {
 
   @Post('login')
   async login(@Body() authData: LoginDto) {
-    return this.userService.login(authData);
+    const token = await this.userService.createToken(authData);
+    return [this.userService.login(authData), token];
   }
 }

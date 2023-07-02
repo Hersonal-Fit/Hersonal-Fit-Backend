@@ -15,6 +15,8 @@ import { HealthTags } from './entities/HealthTags.entity';
 import { Likes } from './entities/Likes.entity';
 import { Rates } from './entities/Rates.entity';
 import { Reports } from './entities/Reports.entity';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -49,6 +51,11 @@ import { Reports } from './entities/Reports.entity';
     UserModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthInterceptor,
+    },
+  ],
 })
 export class AppModule {}
