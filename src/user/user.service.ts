@@ -24,12 +24,13 @@ export class UserService {
     try {
       const { email, password, confirmPassword, nickname } = signupData;
       const findUser = await this.userRepository.findOne({
-        where: { email },
+        where: { nickname },
       });
       if (password !== confirmPassword)
         throw new ConflictException('패스워드가 일치하지않습니다.');
-      if (nickname === findUser.nickname)
+      if (findUser && nickname === findUser.nickname) {
         throw new ConflictException('이미 존재하는 닉네임입니다.');
+      }
       const hashedPassword = await bcrypt.hash(signupData.password, 12);
       const madeUser = await this.userRepository.create({
         email: email,
@@ -37,7 +38,7 @@ export class UserService {
         password: hashedPassword,
       });
       await this.userRepository.save(madeUser);
-      return '회원가입에 성공하였습니다.';
+      return [madeUser, '회원가입에 성공하였습니다.'];
     } catch (error) {
       console.log(error.message);
       throw new BadRequestException(error.message);

@@ -2,6 +2,7 @@ import { LoginDto } from 'src/dto/login.dto';
 import { SignupDto } from '../dto/signup.dto';
 import { UserService } from './user.service';
 import { Controller, Post, Body } from '@nestjs/common';
+import { Users } from 'src/entities/Users.entity';
 
 @Controller('auth')
 export class UserController {
@@ -10,6 +11,7 @@ export class UserController {
 
   @Post('signup')
   async signup(@Body() singupData: SignupDto) {
+    console.log(singupData, 'dddddddddddd');
     return this.userService.signup(singupData);
   }
 
