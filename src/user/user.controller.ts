@@ -11,13 +11,13 @@ export class UserController {
 
   @Post('signup')
   async signup(@Body() singupData: SignupDto) {
-    console.log(singupData, 'dddddddddddd');
     return this.userService.signup(singupData);
   }
 
   @Post('login')
   async login(@Body() authData: LoginDto) {
     const token = await this.userService.createToken(authData);
-    return [this.userService.login(authData), token];
+    const getData = await this.userService.login(authData);
+    return getData;
   }
 }
