@@ -63,7 +63,10 @@ export class UserService {
         throw new UnauthorizedException(
           '이메일 또는 비밀번호가 일치하지 않습니다.',
         );
-      return ['로그인에 성공하였습니다.', findUser.nickname];
+      return {
+        message: '로그인에 성공하였습니다.',
+        nickname: findUser.nickname,
+      };
     } catch (error) {
       console.log(error.message);
       throw new BadRequestException(error.message);
@@ -74,7 +77,7 @@ export class UserService {
     const payload = { email: authData.email };
     const expiresIn = 3600;
     const allowdToken = this.jwtService.sign(payload, { expiresIn });
-    return allowdToken;
+    return `Bearer ${allowdToken}`;
   }
 
   async verifyToken(token: string): Promise<string> {
