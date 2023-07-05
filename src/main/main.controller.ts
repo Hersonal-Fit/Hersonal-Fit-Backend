@@ -7,5 +7,7 @@ export class MainController {
   constructor(private readonly mainService: MainService) {}
 
   // @Get()
-  // async getMain
+  // async getMainPage() {
+  //   return this.mainService.getMainPage();
+  // }
 }

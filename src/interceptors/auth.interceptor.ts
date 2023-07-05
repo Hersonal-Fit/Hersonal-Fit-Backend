@@ -12,7 +12,7 @@ export class AuthInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
 
     // 헤더에 토큰 추가
-    const token = 'YOUR_TOKEN';
+    const token = request.headers.authorization;
     request.headers.authorization = `Bearer ${token}`;
 
     return next.handle();
