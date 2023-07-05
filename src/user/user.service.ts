@@ -82,8 +82,8 @@ export class UserService {
 
   async verifyToken(token: string): Promise<string> {
     if (token) {
-      const [bearer, proveToken] = token.split(' ');
-      if (bearer === 'Bearer' && proveToken) {
+      const [Bearer, proveToken] = token.split(' ');
+      if (Bearer === 'Bearer' && proveToken) {
         return token;
       }
     }
