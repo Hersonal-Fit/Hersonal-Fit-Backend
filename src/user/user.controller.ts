@@ -17,6 +17,7 @@ export class UserController {
   async login(@Body() authData: LoginDto) {
     const token = await this.userService.createToken(authData);
     const getData = await this.userService.login(authData);
-    return getData;
+    const tokenVerify = await this.userService.verifyToken(token);
+    return [token, getData];
   }
 }
