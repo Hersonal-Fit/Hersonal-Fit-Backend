@@ -13,7 +13,10 @@ export class AuthInterceptor implements NestInterceptor {
 
     // 헤더에 토큰 추가
     const token = request.headers.authorization;
-    request.headers.authorization = `Bearer ${token}`;
+    if (token) {
+      request.headers.authorization = `Bearer ${token}`;
+    }
+    console.log(request.headers);
 
     return next.handle();
   }
