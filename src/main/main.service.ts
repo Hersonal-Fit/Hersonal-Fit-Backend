@@ -19,8 +19,10 @@ export class MainService {
       const findUser = await this.userRepository.findOne({
         where: { email },
       });
-      const findRoutine = await this.
-      return findRoutine;
+      const findRoutine = await this.fitnessAchieveRepository.findOne({
+        where: {email}
+      })
+      return [findRoutine];
     } catch (error) {
       throw new BadRequestException(error.message);
     }
