@@ -1,5 +1,4 @@
-import { DataSource } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
+import { ConnectionOptions } from 'typeorm';
 import { Users } from './entities/Users.entity';
 import { Comments } from './entities/Comments.entity';
 import { Communities } from './entities/Communities.entity';
@@ -11,15 +10,13 @@ import { Likes } from './entities/Likes.entity';
 import { Rates } from './entities/Rates.entity';
 import { Reports } from './entities/Reports.entity';
 
-const configService = new ConfigService();
-
-const mysqlDataSource = new DataSource({
+const config: ConnectionOptions = {
   type: 'mysql',
-  host: configService.get<string>('MYSQL_HOST'),
+  host: process.env.MYSQL_HOST,
   port: 3306,
-  username: configService.get<string>('MYSQL_USERNAME'),
-  password: configService.get<string>('MYSQL_PASSWORD'),
-  database: configService.get<string>('MYSQL_DATABASE'),
+  username: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   entities: [
     Users,
     Comments,
@@ -32,8 +29,10 @@ const mysqlDataSource = new DataSource({
     Rates,
     Reports,
   ],
+  synchronize: true,
   migrations: ['src/migrations/*.ts'],
   migrationsTableName: 'migrations',
-});
+  logging: true,
+};
 
-export default mysqlDataSource;
+export = config;
